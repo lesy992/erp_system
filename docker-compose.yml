@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # Database 인프라 영역
+  # ==========================================
+  auth-db:
+    image: mysql:8.0
+    container_name: auth-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${AUTH_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: Asia/Seoul
+    ports:
+      - "${AUTH_DB_PORT}:3306" # 로컬 호스트 포트:컨테이너 포트
+    networks:
+      - erp-network
+    volumes:
+      - auth-db-data:/var/lib/mysql # 데이터 영속성 보장
+
+  biz-db:
+    image: mysql:8.0
+    container_name: biz-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${BIZ_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: Asia/Seoul
+    ports:
+      - "${BIZ_DB_PORT}:3306"
+    networks:
+      - erp-network
+    volumes:
+      - biz-db-data:/var/lib/mysql
+
+  # ==========================================
+  # Application 서비스 영역 (향후 활성화)
+  # ==========================================
+  # auth-service:
+  #   build: ./auth-service
+  #   container_name: auth-service
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+  #     - DB_HOST=auth-db # Docker 내부 네트워크에서 컨테이너명으로 접근
+  #     - DB_PORT=3306    # 컨테이너 내부 맵핑 포트
+  #     - DB_NAME=${AUTH_DB_NAME}
+  #     - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  #   ports:
+  #     - "8081:8080"
+  #   depends_on:
+  #     - auth-db
+  #   networks:
+  #     - erp-network
+
+  # biz-service:
+  #   build: ./biz-service
+  #   container_name: biz-service
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+  #     - DB_HOST=biz-db
+  #     - DB_PORT=3306
+  #     - DB_NAME=${BIZ_DB_NAME}
+  #     - DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  #   ports:
+  #     - "8082:8080"
+  #   depends_on:
+  #     - biz-db
+  #   networks:
+  #     - erp-network
+
+networks:
+  erp-network:
+    driver: bridge
+
+volumes:
+  auth-db-data:
+  biz-db-data:

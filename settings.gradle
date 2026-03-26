@@ -1,0 +1,3 @@
+rootProject.name = 'erp_system'
+include 'common'
+include 'authService'
