@@ -22,8 +22,6 @@ public class RegisterMemberController {
 
     @PostMapping("/signup")
     Member registerMember(@RequestBody RegisterMemberRequest request) {
-        System.out.println(request);
-
         RegisterMemberCommand command = RegisterMemberCommand.builder()
                 .name(request.getName())
                 .address(request.getAddress())

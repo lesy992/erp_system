@@ -14,7 +14,7 @@ public class MemberMapper {
                 ,new Member.MemberEmail(memberJpaEntity.getMemberEmail())
                 ,new Member.MemberPassword(memberJpaEntity.getMemberPassword())
                 ,new Member.MemberDelYn(memberJpaEntity.getDelYn())
-                ,new Member.MemberRole(memberJpaEntity.getRole())
+                ,new Member.MemberRole(memberJpaEntity.getMemberRole())
         );
     }
 }

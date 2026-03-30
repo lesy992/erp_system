@@ -33,7 +33,6 @@ public class RegisterMemberService implements RegisterMemberCase {
                 new Member.MemberDelYn(command.getDelYn()),
                 new Member.MemberRole(command.getRole())
         );
-
         return memberMapper.mapToDomainEntity(jpaEntity);
     }
 }

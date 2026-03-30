@@ -26,9 +26,11 @@ public class MemberJpaEntity {
 
     private String MemberPassword;
 
+    @Enumerated(EnumType.STRING)
     private DelYn DelYn;
 
-    private Role Role;
+    @Enumerated(EnumType.STRING)
+    private Role memberRole;
 
     public MemberJpaEntity(String memberName, String memberAddress, String memberEmail, String memberPassword, DelYn memberDelYn, Role memberRole) {
         this.MemberName = memberName;
@@ -36,6 +38,6 @@ public class MemberJpaEntity {
         this.MemberEmail = memberEmail;
         this.MemberPassword = memberPassword;
         this.DelYn = memberDelYn;
-        this.Role = memberRole;
+        this.memberRole = memberRole;
     }
 }
