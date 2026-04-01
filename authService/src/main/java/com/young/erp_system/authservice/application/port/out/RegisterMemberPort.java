@@ -14,4 +14,5 @@ public interface RegisterMemberPort {
             , Member.MemberRole memberRole
     );
 
+    MemberJpaEntity findByEmail(Member.MemberEmail);
 }
