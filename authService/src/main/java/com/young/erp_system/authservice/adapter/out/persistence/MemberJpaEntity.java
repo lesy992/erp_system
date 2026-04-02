@@ -16,28 +16,28 @@ public class MemberJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long MemberId;
+    private Long memberId;
 
-    private String MemberName;
+    private String memberName;
 
-    private String MemberAddress;
+    private String memberAddress;
 
-    private String MemberEmail;
+    private String memberEmail;
 
-    private String MemberPassword;
+    private String memberPassword;
 
     @Enumerated(EnumType.STRING)
-    private DelYn DelYn;
+    private DelYn delYn;
 
     @Enumerated(EnumType.STRING)
     private Role memberRole;
 
     public MemberJpaEntity(String memberName, String memberAddress, String memberEmail, String memberPassword, DelYn memberDelYn, Role memberRole) {
-        this.MemberName = memberName;
-        this.MemberAddress = memberAddress;
-        this.MemberEmail = memberEmail;
-        this.MemberPassword = memberPassword;
-        this.DelYn = memberDelYn;
+        this.memberName = memberName;
+        this.memberAddress = memberAddress;
+        this.memberEmail = memberEmail;
+        this.memberPassword = memberPassword;
+        this.delYn = memberDelYn;
         this.memberRole = memberRole;
     }
 }

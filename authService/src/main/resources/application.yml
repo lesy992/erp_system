@@ -17,5 +17,5 @@ spring:
           format_sql: true
 
 jwt:
-  secret: auth-256-bit-secret # 실제로는 32바이트 이상의 복잡한 무작위 문자열 사용 권장
+  secret: your-very-secure-and-long-secret-key-for-jwt-at-least-32-chars-long # 실제로는 32바이트 이상의 복잡한 무작위 문자열 사용 권장
   expiration_time: 1800000

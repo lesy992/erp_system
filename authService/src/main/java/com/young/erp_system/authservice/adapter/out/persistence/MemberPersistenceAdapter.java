@@ -1,13 +1,16 @@
 package com.young.erp_system.authservice.adapter.out.persistence;
 
+import com.young.erp_system.authservice.application.port.out.LoginMemberPort;
 import com.young.erp_system.authservice.application.port.out.RegisterMemberPort;
 import com.young.erp_system.authservice.domain.Member;
 import common.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class MemberPersistenceAdapter implements RegisterMemberPort {
+public class MemberPersistenceAdapter implements RegisterMemberPort, LoginMemberPort {
 
     private final MemberRepository memberRepository;
 
@@ -25,5 +28,9 @@ public class MemberPersistenceAdapter implements RegisterMemberPort {
         );
     }
 
+    @Override
+    public Optional<MemberJpaEntity> findByEmail(Member.MemberEmail memberEmail) {
+        return memberRepository.findByMemberEmail(memberEmail.getMemberEmail());
+    }
 
 }

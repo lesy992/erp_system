@@ -4,7 +4,10 @@ import com.young.erp_system.authservice.adapter.out.persistence.MemberJpaEntity;
 import com.young.erp_system.authservice.application.port.in.LoginMemberCase;
 import com.young.erp_system.authservice.application.port.in.LoginMemberCommand;
 import com.young.erp_system.authservice.application.port.out.LoginMemberPort;
+import com.young.erp_system.authservice.domain.Member;
 import com.young.erp_system.authservice.infrastructure.jwt.JwtProvider;
+import com.young.erp_system.common.exception.CustomException;
+import com.young.erp_system.common.exception.ErrorCode;
 import common.MemberCase;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,4 +22,16 @@ public class LoginMemberService implements LoginMemberCase {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
+    @Override
+    public String loginMember(LoginMemberCommand command) {
+
+        MemberJpaEntity member = loginMemberPort.findByEmail(new Member.MemberEmail(command.getEmail()))
+                .orElseThrow(() -> new CustomException(ErrorCode.AUTH_FAILED));
+
+        if(!passwordEncoder.matches(command.getPassword(), member.getMemberPassword())){
+            throw new CustomException(ErrorCode.AUTH_FAILED);
+        }
+
+        return jwtProvider.createAccessToken(member.getMemberEmail(), member.getMemberRole().name());
+    }
 }
