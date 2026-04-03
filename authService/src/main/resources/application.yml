@@ -11,10 +11,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      show-sql: true
-      properties:
-        hibernate:
-          format_sql: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
+
 
 jwt:
   secret: your-very-secure-and-long-secret-key-for-jwt-at-least-32-chars-long # 실제로는 32바이트 이상의 복잡한 무작위 문자열 사용 권장

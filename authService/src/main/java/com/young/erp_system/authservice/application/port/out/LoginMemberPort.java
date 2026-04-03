@@ -6,5 +6,5 @@ import com.young.erp_system.authservice.domain.Member;
 import java.util.Optional;
 
 public interface LoginMemberPort {
-    Optional<MemberJpaEntity> findByEmail(Member.MemberEmail memberEmail);
+    Optional<MemberJpaEntity> findByEmail(Member.MemberEmail memberEmail, Member.MemberDelYn memberDelYn);
 }

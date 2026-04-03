@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member")
@@ -31,6 +35,13 @@ public class MemberJpaEntity {
 
     @Enumerated(EnumType.STRING)
     private Role memberRole;
+
+    @CreatedDate
+    @Column(insertable = true)
+    private LocalDateTime memberCreateTime;
+
+    @LastModifiedDate
+    private LocalDateTime memberUpdateTime;
 
     public MemberJpaEntity(String memberName, String memberAddress, String memberEmail, String memberPassword, DelYn memberDelYn, Role memberRole) {
         this.memberName = memberName;

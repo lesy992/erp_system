@@ -29,7 +29,7 @@ public class MemberPersistenceAdapter implements RegisterMemberPort, LoginMember
     }
 
     @Override
-    public Optional<MemberJpaEntity> findByEmail(Member.MemberEmail memberEmail) {
+    public Optional<MemberJpaEntity> findByEmail(Member.MemberEmail memberEmail, Member.MemberDelYn memberDelYn) {
         return memberRepository.findByMemberEmail(memberEmail.getMemberEmail());
     }
 
