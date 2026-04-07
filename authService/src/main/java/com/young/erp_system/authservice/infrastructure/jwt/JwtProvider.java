@@ -13,6 +13,8 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
+    private static final String TOKEN_PREFIX = "Bearer ";
+
     private final Key secretKey;
     private final long accessTokenExpiration;
 
@@ -25,16 +27,17 @@ public class JwtProvider {
     }
 
     // Access Token 발급
-    public String createAccessToken(String email, String role) {
+    public JwtToken createAccessToken(String email, String role) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + accessTokenExpiration);
 
-        return Jwts.builder()
+        String accessToken = Jwts.builder()
                 .setSubject(email)
                 .claim("role", role) // 권한 정보 추가
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
+        return new JwtToken(accessToken, TOKEN_PREFIX, accessTokenExpiration / 1000);
     }
 }

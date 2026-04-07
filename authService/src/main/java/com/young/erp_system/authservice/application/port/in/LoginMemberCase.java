@@ -1,6 +1,8 @@
 package com.young.erp_system.authservice.application.port.in;
 
+import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
+
 public interface LoginMemberCase {
 
-    String loginMember(LoginMemberCommand command);
+    JwtToken loginMember(LoginMemberCommand command);
 }

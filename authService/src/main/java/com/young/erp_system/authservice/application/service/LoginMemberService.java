@@ -7,6 +7,7 @@ import com.young.erp_system.authservice.application.port.out.LoginMemberPort;
 import com.young.erp_system.authservice.domain.DelYn;
 import com.young.erp_system.authservice.domain.Member;
 import com.young.erp_system.authservice.infrastructure.jwt.JwtProvider;
+import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
 import com.young.erp_system.common.exception.CustomException;
 import com.young.erp_system.common.exception.ErrorCode;
 import common.MemberCase;
@@ -24,7 +25,7 @@ public class LoginMemberService implements LoginMemberCase {
     private final JwtProvider jwtProvider;
 
     @Override
-    public String loginMember(LoginMemberCommand command) {
+    public JwtToken loginMember(LoginMemberCommand command) {
 
         MemberJpaEntity member = loginMemberPort.findByEmail(
                 new Member.MemberEmail(command.getEmail()),

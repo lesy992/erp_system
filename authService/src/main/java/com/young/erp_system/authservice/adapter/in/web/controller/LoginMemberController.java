@@ -4,6 +4,7 @@ import com.young.erp_system.authservice.adapter.in.web.request.LoginMemberReques
 import com.young.erp_system.authservice.adapter.in.web.response.LoginResponse;
 import com.young.erp_system.authservice.application.port.in.LoginMemberCase;
 import com.young.erp_system.authservice.application.port.in.LoginMemberCommand;
+import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
 import common.WebAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,14 @@ public class LoginMemberController {
     private final LoginMemberCase loginMemberCase;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginMemberRequest request){
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginMemberRequest request) {
         LoginMemberCommand command = LoginMemberCommand.builder()
                 .email(request.getMemberEmail())
                 .password(request.getMemberPassword())
                 .build();
 
-        String token = loginMemberCase.loginMember(command);
+        JwtToken token = loginMemberCase.loginMember(command);
 
-        return ResponseEntity.ok(new LoginResponse(token));
+        return ResponseEntity.ok(LoginResponse.from(token));
     }
 }
