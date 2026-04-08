@@ -1,5 +1,9 @@
 package com.young.erp_system.authservice.infrastructure.jwt;
 
+import com.young.erp_system.common.exception.CustomException;
+import com.young.erp_system.common.exception.ErrorCode;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -39,5 +43,29 @@ public class JwtProvider {
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
         return new JwtToken(accessToken, TOKEN_PREFIX, accessTokenExpiration / 1000);
+    }
+    public Claims parseClaims(String token) {
+        try {
+            String plainToken = stripBearerPrefix(token);
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(plainToken)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new CustomException(ErrorCode.TOKEN_EXPIRED);
+        } catch (Exception e) {
+            throw new CustomException(ErrorCode.AUTH_FAILED);
+        }
+    }
+
+    private String stripBearerPrefix(String token) {
+        if (token == null) {
+            throw new CustomException(ErrorCode.INVALID_INPUT_VALUE);
+        }
+        if (token.startsWith(TOKEN_PREFIX)) {
+            return token.substring(TOKEN_PREFIX.length());
+        }
+        return token;
     }
 }
