@@ -6,7 +6,7 @@ import com.young.erp_system.authservice.application.port.in.RegisterMemberCase;
 import com.young.erp_system.authservice.application.port.in.RegisterMemberCommand;
 import com.young.erp_system.authservice.application.port.out.RegisterMemberPort;
 import com.young.erp_system.authservice.domain.Member;
-import common.MemberCase;
+import com.young.erp_system.common.annotation.MemberCase;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

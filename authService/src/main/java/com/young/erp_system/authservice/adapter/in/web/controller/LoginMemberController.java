@@ -8,7 +8,7 @@ import com.young.erp_system.authservice.application.port.in.LoginMemberCase;
 import com.young.erp_system.authservice.application.port.in.LoginMemberCommand;
 import com.young.erp_system.authservice.infrastructure.jwt.JwtProvider;
 import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
-import common.WebAdapter;
+import com.young.erp_system.common.annotation.WebAdapter;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

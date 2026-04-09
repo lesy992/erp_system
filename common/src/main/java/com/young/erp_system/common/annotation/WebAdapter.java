@@ -1,4 +1,4 @@
-package common;
+package com.young.erp_system.common.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;

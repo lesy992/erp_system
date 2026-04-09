@@ -1,4 +1,4 @@
-package com.young.erp_system.authservice.infrastructure.config;
+package com.young.erp_system.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

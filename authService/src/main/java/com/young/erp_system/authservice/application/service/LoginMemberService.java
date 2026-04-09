@@ -10,10 +10,11 @@ import com.young.erp_system.authservice.infrastructure.jwt.JwtProvider;
 import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
 import com.young.erp_system.common.exception.CustomException;
 import com.young.erp_system.common.exception.ErrorCode;
-import common.MemberCase;
+import com.young.erp_system.common.annotation.MemberCase;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @MemberCase
 @RequiredArgsConstructor

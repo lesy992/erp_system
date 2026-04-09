@@ -2,7 +2,7 @@ package com.young.erp_system.authservice.application.port.in;
 
 import com.young.erp_system.authservice.domain.DelYn;
 import com.young.erp_system.authservice.domain.Role;
-import common.SelfValidating;
+import com.young.erp_system.common.utlis.SelfValidating;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package common;
+package com.young.erp_system.common.utlis;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
