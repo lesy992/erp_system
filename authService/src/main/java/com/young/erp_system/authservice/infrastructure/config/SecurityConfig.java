@@ -1,4 +1,4 @@
-package com.young.erp_system.common.config;
+package com.young.erp_system.authservice.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
