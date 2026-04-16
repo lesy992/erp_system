@@ -11,6 +11,7 @@ import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
 import com.young.erp_system.common.annotation.WebAdapter;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LoginMemberController {
 
+    private static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
     private final LoginMemberCase loginMemberCase;
     private final JwtProvider jwtProvider;
 
@@ -35,7 +37,18 @@ public class LoginMemberController {
 
         JwtToken token = loginMemberCase.loginMember(command);
 
-        return ResponseEntity.ok(LoginResponse.from(token));
+        //return ResponseEntity.ok(LoginResponse.from(token));
+        ResponseCookie accessTokenCookie = ResponseCookie.from(ACCESS_TOKEN_COOKIE_NAME, token.accessToken())
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(token.expiresIn() / 1000)
+                .sameSite("Lax")
+                .build();
+
+        return ResponseEntity.ok()
+                .header("Set-Cookie", accessTokenCookie.toString())
+                .body(LoginResponse.from(token));
     }
 
     @PostMapping("/token/validate")
