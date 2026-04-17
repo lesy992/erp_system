@@ -51,6 +51,21 @@ public class LoginMemberController {
                 .body(LoginResponse.from(token));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(){
+        ResponseCookie deleteAccessTokenCookie = ResponseCookie.from(ACCESS_TOKEN_COOKIE_NAME, "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Lax")
+                .build();
+
+        return ResponseEntity.noContent()
+                .header("Set-Cookie", deleteAccessTokenCookie.toString())
+                .build();
+    }
+
     @PostMapping("/token/validate")
     public ResponseEntity<TokenValidationResponse> validateToken(@RequestBody TokenValidationRequest request){
         Claims claims = jwtProvider.parseClaims(request.getToken());
