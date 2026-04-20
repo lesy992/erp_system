@@ -1,5 +1,6 @@
 package com.young.erp_system.authservice.infrastructure.jwt;
 
+import com.young.erp_system.authservice.application.service.RedisTokenBlacklistService;
 import com.young.erp_system.common.exception.CustomException;
 import com.young.erp_system.common.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
@@ -27,9 +28,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
     private final JwtProvider jwtProvider;
+    private final RedisTokenBlacklistService tokenBlacklistService;
 
-    public JwtAuthenticationFilter(JwtProvider jwtProvider) {
+    public JwtAuthenticationFilter(JwtProvider jwtProvider, RedisTokenBlacklistService tokenBlacklistService) {
         this.jwtProvider = jwtProvider;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     @Override
@@ -37,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         return PATH_MATCHER.match("/api/auth/login", uri)
                 || PATH_MATCHER.match("/api/auth/signup", uri)
+                || PATH_MATCHER.match("/api/auth/logout", uri)
                 || PATH_MATCHER.match("/swagger-ui/**", uri)
                 || PATH_MATCHER.match("/v3/api-docs/**", uri)
                 || PATH_MATCHER.match("/swagger-ui.html", uri);
@@ -54,6 +58,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         try {
+            if (tokenBlacklistService.isBlacklisted(authHeader)) {
+                unauthorized(response, ErrorCode.TOKEN_BLACKLISTED);
+                return;
+            }
+
             Claims claims = jwtProvider.parseClaims(authHeader);
             String role = claims.get("role", String.class);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

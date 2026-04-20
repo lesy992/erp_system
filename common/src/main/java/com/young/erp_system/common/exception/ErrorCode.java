@@ -14,6 +14,7 @@ public enum ErrorCode {
     // 인증/테넌트 (Phase 2 핵심)
     AUTH_FAILED(401, "A001", "인증에 실패했습니다."),
     TOKEN_EXPIRED(401, "A002", "토큰이 만료되었습니다."),
+    TOKEN_BLACKLISTED(401, "A003", "로그아웃 처리된 토큰입니다."),
     TENANT_NOT_FOUND(404, "T001", "존재하지 않는 테넌트입니다.");
 
     private final int status;

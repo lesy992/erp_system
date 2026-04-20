@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtProvider {
@@ -37,6 +38,7 @@ public class JwtProvider {
 
         String accessToken = Jwts.builder()
                 .setSubject(email)
+                .setId(UUID.randomUUID().toString())
                 .claim("role", role) // 권한 정보 추가
                 .setIssuedAt(now)
                 .setExpiration(validity)
