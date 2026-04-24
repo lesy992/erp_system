@@ -7,7 +7,7 @@ import com.young.erp_system.authservice.application.port.out.LoginMemberPort;
 import com.young.erp_system.authservice.domain.DelYn;
 import com.young.erp_system.authservice.domain.Member;
 import com.young.erp_system.authservice.infrastructure.jwt.JwtProvider;
-import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
+import com.young.erp_system.common.jwt.JwtToken;
 import com.young.erp_system.common.exception.CustomException;
 import com.young.erp_system.common.exception.ErrorCode;
 import com.young.erp_system.common.annotation.MemberCase;

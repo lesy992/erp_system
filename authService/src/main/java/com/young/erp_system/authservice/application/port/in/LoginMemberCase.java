@@ -1,6 +1,6 @@
 package com.young.erp_system.authservice.application.port.in;
 
-import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
+import com.young.erp_system.common.jwt.JwtToken;
 
 public interface LoginMemberCase {
 

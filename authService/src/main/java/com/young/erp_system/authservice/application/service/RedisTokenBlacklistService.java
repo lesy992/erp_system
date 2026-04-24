@@ -1,6 +1,7 @@
 package com.young.erp_system.authservice.application.service;
 
 import com.young.erp_system.authservice.infrastructure.jwt.JwtProvider;
+import com.young.erp_system.common.jwt.TokenBlacklistPort;
 import io.jsonwebtoken.Claims;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -13,7 +14,7 @@ import java.time.Duration;
 import java.util.HexFormat;
 
 @Component
-public class RedisTokenBlacklistService {
+public class RedisTokenBlacklistService implements TokenBlacklistPort {
 
     private static final String BLACKLIST_PREFIX = "blacklist:access-token:";
 

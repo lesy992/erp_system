@@ -8,7 +8,7 @@ import com.young.erp_system.authservice.application.port.in.LoginMemberCase;
 import com.young.erp_system.authservice.application.port.in.LoginMemberCommand;
 import com.young.erp_system.authservice.application.service.RedisTokenBlacklistService;
 import com.young.erp_system.authservice.infrastructure.jwt.JwtProvider;
-import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
+import com.young.erp_system.common.jwt.JwtToken;
 import com.young.erp_system.common.annotation.WebAdapter;
 import com.young.erp_system.common.exception.CustomException;
 import io.jsonwebtoken.Claims;

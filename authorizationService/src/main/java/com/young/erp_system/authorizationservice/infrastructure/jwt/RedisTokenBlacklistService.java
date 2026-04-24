@@ -1,5 +1,6 @@
 package com.young.erp_system.authorizationservice.infrastructure.jwt;
 
+import com.young.erp_system.common.jwt.TokenBlacklistPort;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 
 @Component
-public class RedisTokenBlacklistService {
+public class RedisTokenBlacklistService implements TokenBlacklistPort {
 
     private static final String BLACKLIST_PREFIX = "blacklist:access-token:";
 

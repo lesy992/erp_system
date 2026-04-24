@@ -1,4 +1,4 @@
-package com.young.erp_system.authorizationservice.infrastructure.jwt;
+package com.young.erp_system.common.jwt;
 
 public record JwtToken(
         String accessToken,

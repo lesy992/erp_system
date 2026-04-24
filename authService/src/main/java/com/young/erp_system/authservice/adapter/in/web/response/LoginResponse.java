@@ -1,6 +1,6 @@
 package com.young.erp_system.authservice.adapter.in.web.response;
 
-import com.young.erp_system.authservice.infrastructure.jwt.JwtToken;
+import com.young.erp_system.common.jwt.JwtToken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
