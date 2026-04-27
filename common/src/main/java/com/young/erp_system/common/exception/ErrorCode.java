@@ -19,7 +19,11 @@ public enum ErrorCode {
 
     // 인가
     ROLE_NOT_FOUND(404, "R001", "존재하지 않는 역할입니다."),
-    PERMISSION_NOT_FOUND(404, "P001", "존재하지 않는 권한입니다.");
+    PERMISSION_NOT_FOUND(404, "P001", "존재하지 않는 권한입니다."),
+
+    // 메뉴
+    MENU_NOT_FOUND(404, "M001", "존재하지 않는 메뉴입니다."),
+    MENU_PERMISSION_NOT_FOUND(404, "M002", "존재하지 않는 메뉴 권한입니다.");
 
     private final int status;
     private final String code;
