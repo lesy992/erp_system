@@ -27,7 +27,7 @@ public class AuthorizationServiceAdapter implements CheckPermissionPort {
                 .retrieve()
                 .body(CheckAuthorizationResponse.class);
 
-        if (response == null || !response.isAllowed()) {
+        if (response == null || !response.allowed()) {
             throw new CustomException(ErrorCode.PERMISSION_DENIED);
         }
     }

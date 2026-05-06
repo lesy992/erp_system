@@ -23,7 +23,11 @@ public enum ErrorCode {
 
     // 메뉴
     MENU_NOT_FOUND(404, "M001", "존재하지 않는 메뉴입니다."),
-    MENU_PERMISSION_NOT_FOUND(404, "M002", "존재하지 않는 메뉴 권한입니다.");
+    MENU_PERMISSION_NOT_FOUND(404, "M002", "존재하지 않는 메뉴 권한입니다."),
+
+    // 공지사항
+    NOTICE_NOT_FOUND(404, "N001", "존재하지 않는 공지사항입니다."),
+    PERMISSION_DENIED(403, "N002", "해당 작업에 대한 권한이 없습니다.");
 
     private final int status;
     private final String code;
