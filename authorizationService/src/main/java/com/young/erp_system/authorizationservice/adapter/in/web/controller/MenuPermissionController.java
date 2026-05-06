@@ -3,12 +3,15 @@ package com.young.erp_system.authorizationservice.adapter.in.web.controller;
 import com.young.erp_system.authorizationservice.adapter.in.web.request.AssignMenuPermissionRequest;
 import com.young.erp_system.authorizationservice.adapter.in.web.response.MenuPermissionResponse;
 import com.young.erp_system.authorizationservice.application.port.in.AssignMenuPermissionCommand;
+import com.young.erp_system.authorizationservice.application.port.in.ManageMenuCase;
 import com.young.erp_system.authorizationservice.application.port.in.ManageMenuPermissionCase;
+import com.young.erp_system.authorizationservice.domain.Menu;
 import com.young.erp_system.authorizationservice.domain.MenuPermission;
 import com.young.erp_system.authorizationservice.domain.Role;
 import com.young.erp_system.common.annotation.WebAdapter;
 import com.young.erp_system.common.exception.CustomException;
 import com.young.erp_system.common.exception.ErrorCode;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @WebAdapter
@@ -24,13 +29,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MenuPermissionController {
 
+    private final ManageMenuCase manageMenuCase;
     private final ManageMenuPermissionCase manageMenuPermissionCase;
 
     @GetMapping("/{menuId}/permissions")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<MenuPermissionResponse>> getMenuPermissions(@PathVariable Long menuId) {
+        Menu menu = manageMenuCase.getMenuById(menuId);
         List<MenuPermissionResponse> response = manageMenuPermissionCase.getMenuPermissionsByMenu(menuId).stream()
-                .map(MenuPermissionResponse::from)
+                .map(p -> MenuPermissionResponse.from(p, menu))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
@@ -39,7 +46,7 @@ public class MenuPermissionController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MenuPermissionResponse> assignMenuPermission(
             @PathVariable Long menuId,
-            @RequestBody AssignMenuPermissionRequest request) {
+            @Valid @RequestBody AssignMenuPermissionRequest request) {
 
         AssignMenuPermissionCommand command = AssignMenuPermissionCommand.builder()
                 .menuId(menuId)
@@ -51,7 +58,8 @@ public class MenuPermissionController {
                 .build();
 
         MenuPermission result = manageMenuPermissionCase.assignOrUpdateMenuPermission(command);
-        return ResponseEntity.status(HttpStatus.CREATED).body(MenuPermissionResponse.from(result));
+        Menu menu = manageMenuCase.getMenuById(menuId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(MenuPermissionResponse.from(result, menu));
     }
 
     @DeleteMapping("/{menuId}/permissions/{role}")
@@ -64,8 +72,11 @@ public class MenuPermissionController {
     @GetMapping("/by-role/{role}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<MenuPermissionResponse>> getMenuPermissionsByRole(@PathVariable String role) {
+        Map<Long, Menu> menuMap = manageMenuCase.getAllMenus().stream()
+                .collect(Collectors.toMap(Menu::getMenuId, Function.identity()));
         List<MenuPermissionResponse> response = manageMenuPermissionCase.getMenuPermissionsByRole(parseRole(role)).stream()
-                .map(MenuPermissionResponse::from)
+                .filter(p -> menuMap.containsKey(p.getMenuId()))
+                .map(p -> MenuPermissionResponse.from(p, menuMap.get(p.getMenuId())))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }

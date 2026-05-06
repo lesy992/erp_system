@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: noticeService
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/notice_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    username: root
+    password: lsy749200!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8083
+
+jwt:
+  secret: your-very-secure-and-long-secret-key-for-jwt-at-least-32-chars-long
+  expiration_time: 1800000
+
+authorization:
+  service:
+    url: http://localhost:8082
