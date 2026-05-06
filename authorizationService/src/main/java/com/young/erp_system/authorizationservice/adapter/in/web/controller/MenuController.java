@@ -15,6 +15,7 @@ import com.young.erp_system.authorizationservice.domain.Role;
 import com.young.erp_system.common.annotation.WebAdapter;
 import com.young.erp_system.common.exception.CustomException;
 import com.young.erp_system.common.exception.ErrorCode;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,7 +90,7 @@ public class MenuController {
 
     @PutMapping("/{menuId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<MenuResponse> updateMenu(@PathVariable Long menuId, @RequestBody UpdateMenuRequest request) {
+    public ResponseEntity<MenuResponse> updateMenu(@PathVariable Long menuId, @Valid @RequestBody UpdateMenuRequest request) {
         UpdateMenuCommand command = UpdateMenuCommand.builder()
                 .name(request.getName())
                 .path(request.getPath())
